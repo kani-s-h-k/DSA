@@ -5,17 +5,17 @@ struct Node{
     public:
     int data;
     Node* next;
-    Node(int data1){
+    Node(int data1,Node* next1){
         data = data1;
-        next = nullptr;
+        next = next1;
     }
 };
 
 Node* createLinkedList(vector<int> &nums){
-    Node* head = new Node(nums[0]);
+    Node* head = new Node(nums[0],nullptr);
     Node* mover = head;
     for(int i =1;i<nums.size();i++){
-        Node* temp = new Node(nums[i]);
+        Node* temp = new Node(nums[i],nullptr);
         mover->next = temp;
         mover = temp;
     }
@@ -90,13 +90,10 @@ Node* removeElementK(Node* head, int k){
     return head;
 }
 Node* insertElementBegin(Node* head, int val){
-    Node* temp = new Node(val);
-    temp->next = head;
-    head = temp;
-    return head;
+    return new Node(val,head);
 }
 Node* insertElementEnd(Node* head, int val){
-    Node* el = new Node(val);
+    Node* el = new Node(val,nullptr);
     if(head==nullptr){
         head = el;
         return head;
@@ -108,8 +105,45 @@ Node* insertElementEnd(Node* head, int val){
     temp->next = el;
     return head;
 }
+Node* insertAtK(Node* head, int k, int val){
+    if(head == nullptr){
+        if(k==1) return new Node(val,nullptr);
+        else return nullptr;
+    }
+    if(k==1){
+        return new Node(val,head);
+    }
+    int cnt =0;
+    Node* temp = head;
+    while(temp!=nullptr){
+        cnt++;
+        if(cnt==k-1){
+            Node* el = new Node(val,temp->next);
+            temp->next = el;
+            break;
+        }
+        temp=temp->next;
+    }
+    return head;
+}
+Node* insertBeforeValue(Node* head, int val,int el){
+    if(head == nullptr) return nullptr;
+    if(head->data == el){
+        return new Node(val,head);
+    }
+    Node* temp = head;
+    while(temp->next!=nullptr){
+        if(temp->next->data == el){
+            Node* el = new Node(val,temp->next);
+            temp->next = el;
+            break;
+        }
+        temp=temp->next;
+    }
+    return head;
+}
 int main() {
-	vector<int> nums={1};
+	vector<int> nums={1,2,3};
 	Node* head = createLinkedList(nums);
-	traverseLinkedList(insertElementEnd(head,2));
+	traverseLinkedList(insertBeforeValue(head,4,2));
 }
