@@ -109,6 +109,7 @@ Node* deleteNodeK(Node* head, int k){
         front->back = prev;
         temp->next = nullptr;
         temp->back == nullptr;
+        delete temp;
     }
     return head;
 }
