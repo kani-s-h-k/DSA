@@ -3,37 +3,40 @@ using namespace std;
 
 struct Node{
     int data;
-    Node* back;
     Node* next;
     
     Node(int data1){
-        data=data1;
-        back=nullptr;
-        next=nullptr;
+        data = data1;
     }
     
-    Node(int data1, Node* back1, Node* next1){
+    Node(int data1,Node* next1){
         data = data1;
-        back=back1;
-        next=next1;
+        next = next1;
     }
 };
 
-Node* createDLL(vector<int> &nums){
+Node* createLL(vector<int> &nums){
     Node* head = new Node(nums[0]);
     Node* prev = head;
-    for(int i =1;i<nums.size();i++){
+    for(int i=1;i<nums.size();i++){
         Node* temp = new Node(nums[i]);
-        temp->back = prev;
         prev->next = temp;
-        prev= temp;
+        prev=temp;
     }
     return head;
 }
 
-Node* reverseDLLBrute(Node* head){
-    Node* temp = head;
+void traverseLL(Node* head){
+    while(head){
+        cout<<head->data<<" ";
+        head=head->next;
+    }
+    cout<<endl;
+}
+
+Node* reverseLL(Node* head){
     stack<int> st;
+    Node* temp = head;
     while(temp){
         st.push(temp->data);
         temp=temp->next;
@@ -47,31 +50,16 @@ Node* reverseDLLBrute(Node* head){
     return head;
 }
 
-Node* reverseDLLOptimal(Node* head){
-    Node* last = nullptr, *current = head;
-    while(current){
-        last = current->back;
-        current->back = current->next;
-        current->next = last;
-        current = current->back;
-    }
-    head = last->back;
-    return head;
-}
-void traverseDLL(Node* head){
-    while(head){
-        cout<<head->data<<" ";
-        head=head->next;
-    }
-}
-
 int main() {
-    int n;
-    cin>>n;
+	int n;
+	cin>>n;
 	vector<int> nums(n);
-	for(int i =0;i<n;i++){
+	for(int i = 0;i<n;i++){
 	    cin>>nums[i];
 	}
-	Node* head = createDLL(nums);
-    traverseDLL(reverseDLLOptimal(head));
+    Node* head = createLL(nums);
+    traverseLL(head);
+    traverseLL(reverseLL(head));
+    return 0;
+    
 }
