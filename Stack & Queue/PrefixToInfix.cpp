@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string postfixToInfix(string s){
+string prefixToInfix(string s){
     int i =s.length()-1;
     stack<string> st;
     
@@ -23,7 +23,7 @@ string postfixToInfix(string s){
 int main() {
 	string s;
 	cin>>s;
-	string res = postfixToInfix(s);
+	string res = prefixToInfix(s);
 	cout<<res<<" ";
     return 0;
 }
