@@ -1,48 +1,39 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-int priority(char ch){
-    if(ch=='^') return 3;
-    else if(ch=='*' || ch=='/') return 2;
-    else if(ch=='+' || ch=='-') return 1;
-    else return -1;
-}
-
-string infixToPostfix(string s){
-    int i =0;
-    stack<char> st;
-    string ans="";
-    int n = s.length();
-    while(i<n){
-        if ((s[i]>='A' && s[i]<='Z') || (s[i]>='a' && s[i]<='z') || (s[i]>='0' && s[i]<='9')) ans+=s[i];
-        else if(s[i]=='(') st.push(s[i]);
-        else if(s[i]==')'){
-            while(!st.empty() && st.top()!='('){
-                ans+=st.top();
+class Solution {
+private:
+    int priority(char c){
+        if(c=='^') return 3;
+        else if(c=='*' || c=='/') return 2;
+        else if(c=='+' || c=='-') return 1;
+        else return -1;
+    }
+public:
+    string infixToPostfix(string s) {
+        stack<char> st;
+        string ans = "";
+        for(char ch: s){
+            if((ch>='A' && ch<='Z') || (ch>='a' && ch<='z') || (ch>='0' && ch<='9')) ans+= ch;
+            else if(ch=='(') st.push(ch);
+            else if(ch==')'){
+                while(!st.empty() && st.top()!='('){
+                    ans+=st.top();
+                    st.pop();
+                }
                 st.pop();
             }
+            else{
+                while(!st.empty() && 
+                st.top()!='(' &&  
+                (priority(ch)<priority(st.top()) || (priority(ch)==priority(st.top()) && ch !='^'))){
+                    ans += st.top();
+                    st.pop();
+                }
+                st.push(ch);
+            }
+        }
+        while(!st.empty()){
+            ans += st.top();
             st.pop();
         }
-        else{
-            while(!st.empty() && (priority(s[i])<=priority(st.top()))){
-                ans+=st.top();
-                st.pop();
-            }
-            st.push(s[i]);
-        }
-        i++;
+        return ans;
     }
-    while(!st.empty()){
-        ans+=st.top();
-        st.pop();
-    }
-    return ans;
-}
-
-
-int main() {
-	string s;
-	cin>>s;
-	string res = infixToPostfix(s);
-	cout<<res<<" ";
-}
+};
