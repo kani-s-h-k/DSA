@@ -7,10 +7,12 @@ class Solution {
             }
             return maxi;
         }
-        int maxi = INT_MIN,points = 0;
+        int maxi = INT_MIN;
         for(int i= 0;i<=2;i++){
-            if(i!=last) points = matrix[n][i] + func(n-1,i,matrix);
-            maxi = max(maxi,points);
+            if(i!=last) {
+                int points = matrix[n][i] + func(n-1,i,matrix);
+                maxi = max(maxi,points);
+            }
         }
         return maxi;
     }
