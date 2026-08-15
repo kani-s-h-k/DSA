@@ -18,8 +18,6 @@ public:
     bool isMatch(string s, string p) {
         int n = s.size(), m= p.size();
         vector<vector<bool>> dp(n+1,vector<bool>(m+1,false));
-        for(int i= 0;i<=n;i++) dp[i][0] = true;
-        for(int j=0;j<=m;j++) dp[0][j] = true;
         return func(n-1,m-1,s,p,dp);
     }
 };

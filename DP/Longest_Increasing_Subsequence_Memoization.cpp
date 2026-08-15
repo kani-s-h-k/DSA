@@ -1,7 +1,7 @@
 class Solution {
 private:
     int func(int ind, int prev, vector<int> &nums, vector<vector<int>> &dp){
-        if(ind<0) return 0;
+        if(ind==nums.size()) return 0;
         if(dp[ind][prev+1]!=-1) return dp[ind][prev+1];
         int notTake = func(ind+1,prev,nums,dp);
         int take = INT_MIN;
